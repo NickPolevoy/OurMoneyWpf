@@ -1,0 +1,123 @@
+﻿<UserControl
+    x:Class="OurMoneyWpf.Modules.Categories.Incomings.IncomingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DataGrid.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid Margin="5">
+            <DataGrid
+                x:Name="SourceCategories"
+                MinWidth="100"
+                MinHeight="100"
+                Margin="5,5,5,5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                cal:Message.Attach="[Event RowEditEnding]=[Action AddOrEditCategory($eventArgs)];
+                [Event SelectionChanged] = [Action OpenSubItems()]"
+                materialDesign:DataGridAssist.CellPadding="4"
+                materialDesign:DataGridAssist.ColumnHeaderPadding="4"
+                AutoGenerateColumns="False"
+                SelectedItem="{Binding SelectedCategory}">
+
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Height="15"
+                                    cal:Message.Attach="DeleteCategory($dataContext)"
+                                    Style="{StaticResource MaterialDesignIconButton}"
+                                    ToolTip="Удалить категорию">
+                                    <materialDesign:PackIcon
+                                        Height="15"
+                                        Foreground="Red"
+                                        Kind="DeleteForever" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn
+                        Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                        Header="Категория Источника" />
+
+                    <DataGridTextColumn
+                        Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                        Header="Всего" />
+                    <DataGridTextColumn
+                        Binding="{Binding Comment, UpdateSourceTrigger=PropertyChanged}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                        Header="Примечание" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Grid Margin="5" Column="1">
+            <DataGrid
+                x:Name="SubCategories"
+                MinWidth="100"
+                MinHeight="100"
+                Margin="5,5,5,5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                cal:Message.Attach="[Event RowEditEnding]=[Action AddOrEditSubcategory($eventArgs)]"
+                materialDesign:DataGridAssist.CellPadding="4"
+                materialDesign:DataGridAssist.ColumnHeaderPadding="4"
+                AutoGenerateColumns="False">
+
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Height="15"
+                                    cal:Message.Attach="DeleteSubcategory($dataContext)"
+                                    Style="{StaticResource MaterialDesignIconButton}"
+                                    ToolTip="Удалить источник">
+                                    <materialDesign:PackIcon
+                                        Height="15"
+                                        Foreground="Red"
+                                        Kind="DeleteForever" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn
+                        Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                        Header="Источник" />
+
+                    <DataGridTextColumn
+                        Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                        Header="Всего" />
+                    <DataGridTextColumn
+                        Binding="{Binding Comment, UpdateSourceTrigger=PropertyChanged}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                        Header="Примечание" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </Grid>
+</UserControl>

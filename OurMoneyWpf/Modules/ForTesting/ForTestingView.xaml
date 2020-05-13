@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="OurMoneyWpf.Modules.ForTesting.ForTestingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             xmlns:local="clr-namespace:OurMoneyWpf.Modules.ForTesting"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <syncfusion:TabControlExt IsLazyLoaded="True" x:Name="TabControl">
+            <syncfusion:TabItemExt Header="Event Agregator">
+                <ContentControl cal:View.Model="{Binding EventAgregatorViewModel}" />
+            </syncfusion:TabItemExt>
+            <syncfusion:TabItemExt Header="ListBox">
+                <ContentControl cal:View.Model="{Binding ListBoxBehindViewModel}" />
+            </syncfusion:TabItemExt>
+
+        </syncfusion:TabControlExt>
+
+
+</Grid>
+</UserControl>

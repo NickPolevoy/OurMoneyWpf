@@ -1,0 +1,65 @@
+﻿<UserControl
+    x:Class="OurMoneyWpf.Modules.Input.Incoming.Controls.SourcesControlView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:OurMoneyWpf.Modules.Input.Incoming.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <StackPanel x:Name="SourcesPanel" Orientation="Horizontal">
+        <StackPanel Margin="5">
+            <TextBlock Margin="4,16,16,4" Style="{StaticResource MaterialDesignTitleTextBlock}">
+                <Run Text="{Binding ListData[0].Header}" />
+            </TextBlock>
+            <ListBox
+                cal:Message.Attach="[Event MouseDoubleClick]=[Action SourceSelected()]"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding ListData[0].Sources}"
+                SelectedItem="{Binding SelectedSource}" MouseDoubleClick="ListBox_MouseDoubleClick" />
+        </StackPanel>
+        <StackPanel Margin="5">
+            <TextBlock Margin="4,16,16,4" Style="{StaticResource MaterialDesignTitleTextBlock}">
+                <Run Text="{Binding ListData[1].Header}" />
+            </TextBlock>
+            <ListBox
+                cal:Message.Attach="[Event MouseDoubleClick]=[Action SourceSelected()]"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding ListData[1].Sources}"
+                SelectedItem="{Binding SelectedSource}" />
+        </StackPanel>
+        <StackPanel>
+            <TextBlock Margin="4,16,16,4" Style="{StaticResource MaterialDesignTitleTextBlock}">
+                <Run Text="{Binding ListData[2].Header}" />
+            </TextBlock>
+            <ListBox
+                cal:Message.Attach="[Event MouseDoubleClick]=[Action SourceSelected()]"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding ListData[2].Sources}"
+                SelectedItem="{Binding SelectedSource}" />
+        </StackPanel>
+        <StackPanel>
+            <TextBlock Margin="4,16,16,4" Style="{StaticResource MaterialDesignTitleTextBlock}">
+                <Run Text="{Binding ListData[3].Header}" />
+            </TextBlock>
+            <ListBox
+                cal:Message.Attach="[Event MouseDoubleClick]=[Action SourceSelected()]"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding ListData[3].Sources}"
+                SelectedItem="{Binding SelectedSource}" />
+        </StackPanel>
+        <StackPanel>
+            <TextBlock Margin="4,16,16,4" Style="{StaticResource MaterialDesignTitleTextBlock}">
+                <Run Text="{Binding ListData[4].Header}" />
+            </TextBlock>
+            <ListBox
+                cal:Message.Attach="[Event MouseDoubleClick]=[Action SourceSelected()]"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding ListData[4].Sources}"
+                SelectedItem="{Binding SelectedSource}" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

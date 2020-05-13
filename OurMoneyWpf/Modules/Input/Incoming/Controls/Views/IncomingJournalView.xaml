@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="OurMoneyWpf.Modules.Input.Incoming.Controls.IncomingJournalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OurMoneyWpf.Modules.Input.Incoming.Controls"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock
+                Grid.Row="0"
+                Margin="16,16,16,4"
+                Style="{StaticResource MaterialDesignTitleTextBlock}"><Run Text="Журнал Операций" />
+            </TextBlock>
+            <Button
+                Margin="5,0,0,0"
+                VerticalAlignment="Bottom"
+                cal:Message.Attach="FilterReplay()"
+                Content="Фильтр"
+                Style="{DynamicResource MaterialDesignFlatButton}" />
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <DataGrid
+                x:Name="GridData"
+                Width="Auto"
+                MinHeight="100"
+                MaxHeight="650"
+                Margin="5,10,5,5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                cal:Message.Attach="[Event MouseDoubleClick]=[Action SelectEvent()]"
+                materialDesign:DataGridAssist.CellPadding="1 4 4 4"
+                materialDesign:DataGridAssist.ColumnHeaderPadding="1"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                SelectedItem="{Binding SelectedEvent}"
+                VerticalScrollBarVisibility="Auto">
+
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Width="Auto"
+                                    Height="15"
+                                    cal:Message.Attach="Delete($dataContext)"
+                                    Style="{StaticResource MaterialDesignIconButton}"
+                                    ToolTip="Удалить доход">
+                                    <materialDesign:PackIcon
+                                        Height="15"
+                                        Foreground="Red"
+                                        Kind="DeleteForever" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding Date, StringFormat=\{0:dd.MM.yy\}}" Header="Дата" />
+                    <DataGridTextColumn Binding="{Binding AccountName, UpdateSourceTrigger=PropertyChanged}" Header="Кошелек" />
+                    <DataGridTextColumn Binding="{Binding SourceName, UpdateSourceTrigger=PropertyChanged}" Header="Источник" />
+                    <DataGridTextColumn Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}" Header="Сумма" />
+                    <DataGridTextColumn Binding="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" Header="Комментарий" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel
+                Margin="0,0,0,8"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,0,5,0"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Text="Итого: " />
+                <TextBlock
+                    Margin="5,0,5,0"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Foreground="Green"
+                    Text="{Binding TotalSum}" />
+                <TextBlock
+                    Margin="3,0,0,0"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Text=" руб." />
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

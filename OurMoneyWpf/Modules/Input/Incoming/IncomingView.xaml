@@ -1,0 +1,62 @@
+﻿<UserControl
+    x:Class="OurMoneyWpf.Modules.Input.Incoming.IncomingView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DataGrid.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="0.8*" />
+        </Grid.ColumnDefinitions>
+        <!--  Журнал операций  -->
+        <materialDesign:Card
+            Grid.RowSpan="2"
+            Width="Auto"
+            MaxHeight="800"
+            Margin="5">
+            <ContentControl cal:View.Model="{Binding IncomingJournalVM}" />
+
+        </materialDesign:Card>
+
+        <!--  Форма ввода  -->
+        <materialDesign:Card Grid.Column="1" Margin="5">
+            <ContentControl cal:View.Model="{Binding IncomingFormVM}" />
+        </materialDesign:Card>
+        <materialDesign:Card Grid.Column="2" Margin="5">
+            <ContentControl cal:View.Model="{Binding AccountBalancesVM}" />
+        </materialDesign:Card>
+        <!--  Выбор источника  -->
+        <materialDesign:Card
+            Grid.Row="1"
+            Grid.Column="1"
+            Width="Auto"
+            Margin="5"
+            VerticalAlignment="Bottom">
+            <ContentControl cal:View.Model="{Binding SourcesControlVM}" />
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

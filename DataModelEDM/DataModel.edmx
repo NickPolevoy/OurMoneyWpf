@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище OurMoneyDbModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Dictionaries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Rate" Type="int" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="PrevId" Type="int" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="ImageId" Type="int" />
+          <Property Name="Hidden" Type="bit" />
+        </EntityType>
+        <EntityType Name="Entities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OperationType" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Discount" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="100" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="MarketId" Type="int" />
+          <Property Name="DebtId" Type="int" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Image" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Dictionaries_Entities">
+          <End Role="Entities" Type="Self.Entities" Multiplicity="1" />
+          <End Role="Dictionaries" Type="Self.Dictionaries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dictionaries">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dictionaries_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
+          <End Role="Dictionaries" Type="Self.Dictionaries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dictionaries">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Dictionaries">
+          <End Role="Dictionaries" Type="Self.Dictionaries" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dictionaries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище OurMoneyDbModelContainer">
+          <EntitySet Name="Dictionaries" EntityType="Self.Dictionaries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entities" EntityType="Self.Entities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Dictionaries_Entities" Association="Self.FK_Dictionaries_Entities">
+            <End Role="Entities" EntitySet="Entities" />
+            <End Role="Dictionaries" EntitySet="Dictionaries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dictionaries_Images" Association="Self.FK_Dictionaries_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="Dictionaries" EntitySet="Dictionaries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Dictionaries" Association="Self.FK_Events_Dictionaries">
+            <End Role="Dictionaries" EntitySet="Dictionaries" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OurMoneyDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Dictionaries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Rate" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="PrevId" Type="Int32" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="ImageId" Type="Int32" />
+          <Property Name="Hidden" Type="Boolean" />
+          <NavigationProperty Name="Entities" Relationship="Self.FK_Dictionaries_Entities" FromRole="Dictionaries" ToRole="Entities" />
+          <NavigationProperty Name="Images" Relationship="Self.FK_Dictionaries_Images" FromRole="Dictionaries" ToRole="Images" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_Events_Dictionaries" FromRole="Dictionaries" ToRole="Events" />
+        </EntityType>
+        <EntityType Name="Entities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Dictionaries" Relationship="Self.FK_Dictionaries_Entities" FromRole="Entities" ToRole="Dictionaries" />
+        </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OperationType" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Discount" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Comment" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="MarketId" Type="Int32" />
+          <Property Name="DebtId" Type="Int32" />
+          <NavigationProperty Name="Dictionaries" Relationship="Self.FK_Events_Dictionaries" FromRole="Events" ToRole="Dictionaries" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Dictionaries" Relationship="Self.FK_Dictionaries_Images" FromRole="Images" ToRole="Dictionaries" />
+        </EntityType>
+        <Association Name="FK_Dictionaries_Entities">
+          <End Role="Entities" Type="Self.Entities" Multiplicity="1" />
+          <End Role="Dictionaries" Type="Self.Dictionaries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dictionaries">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dictionaries_Images">
+          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
+          <End Role="Dictionaries" Type="Self.Dictionaries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Images">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dictionaries">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Dictionaries">
+          <End Role="Dictionaries" Type="Self.Dictionaries" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dictionaries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OurMoneyDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Dictionaries" EntityType="Self.Dictionaries" />
+          <EntitySet Name="Entities" EntityType="Self.Entities" />
+          <EntitySet Name="Events" EntityType="Self.Events" />
+          <EntitySet Name="Images" EntityType="Self.Images" />
+          <AssociationSet Name="FK_Dictionaries_Entities" Association="Self.FK_Dictionaries_Entities">
+            <End Role="Entities" EntitySet="Entities" />
+            <End Role="Dictionaries" EntitySet="Dictionaries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dictionaries_Images" Association="Self.FK_Dictionaries_Images">
+            <End Role="Images" EntitySet="Images" />
+            <End Role="Dictionaries" EntitySet="Dictionaries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Dictionaries" Association="Self.FK_Events_Dictionaries">
+            <End Role="Dictionaries" EntitySet="Dictionaries" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище OurMoneyDbModelContainer" CdmEntityContainer="OurMoneyDbEntities">
+          <EntitySetMapping Name="Dictionaries">
+            <EntityTypeMapping TypeName="OurMoneyDbModel.Dictionaries">
+              <MappingFragment StoreEntitySet="Dictionaries">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="PrevId" ColumnName="PrevId" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="Hidden" ColumnName="Hidden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entities">
+            <EntityTypeMapping TypeName="OurMoneyDbModel.Entities">
+              <MappingFragment StoreEntitySet="Entities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="OurMoneyDbModel.Events">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OperationType" ColumnName="OperationType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="MarketId" ColumnName="MarketId" />
+                <ScalarProperty Name="DebtId" ColumnName="DebtId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="OurMoneyDbModel.Images">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
